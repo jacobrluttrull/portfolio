@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-
+from fastapi import Form
+from models.contact import Contact
+from typing import Annotated
 from database import SessionLocal
 from models.project import Project
+from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -36,3 +39,25 @@ async def projects(request: Request, db: Session = Depends(get_db)):
 @router.get("/contact")
 async def contact(request: Request):
     return templates.TemplateResponse("contact.html", {"request": request})
+
+@router.post("/contact")
+async def contact_submit(
+        request: Request,
+        name: Annotated[str, Form()],
+        email: Annotated[str, Form()],
+        message: Annotated[str, Form()],
+        phone_number: Annotated[str | None, Form()] = None,
+        db: Session = Depends(get_db)
+):
+    contact_entry = Contact(
+        name=name,
+        email=email,
+        message=message,
+        phone_number=phone_number
+    )
+    db.add(contact_entry)
+    db.commit()
+    return templates.TemplateResponse("contact.html", {"request": request, "success": True})
+
+
+

@@ -7,6 +7,12 @@
     <div class="container">
         <h1 class="page-title">Contact <span class="accent">Me</span></h1>
 
+        {% if success %}
+        <div class="success-message">
+            <p>Message sent successfully! I'll get back to you soon.</p>
+        </div>
+        {% endif %}
+
         <form class="contact-form" action="/contact" method="post">
             <div class="form-group">
                 <label for="name">Name *</label>
