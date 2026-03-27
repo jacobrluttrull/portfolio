@@ -214,3 +214,16 @@ h1, h2, h3 {
     color: #2ecc71;
     max-width: 600px;
 }
+
+.error-message {
+    padding: 1rem 1.5rem;
+    margin: 0 auto 2rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    color: var(--accent);
+    max-width: 600px;
+}
+
+.error-message p {
+    margin-bottom: 0.25rem;
+}

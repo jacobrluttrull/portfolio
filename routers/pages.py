@@ -49,11 +49,24 @@ async def contact_submit(
         phone_number: Annotated[str | None, Form()] = None,
         db: Session = Depends(get_db)
 ):
+    errors = []
+    if not validate_name(name):
+        errors.append("Invalid name. Please enter a valid name.")
+    if not validate_email(email):
+        errors.append("Invalid email. Please enter a valid email address.")
+    if phone_number and not validate_phone(phone_number):
+        errors.append("Invalid phone number. Please enter a valid phone number.")
+    if not validate_message(message):
+        errors.append("Invalid message. Please enter a message that is at least 10 characters long.")
+    if errors:
+        return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "message": message, "phone_number": phone_number})
+
     contact_entry = Contact(
-        name=name,
-        email=email,
-        message=message,
-        phone_number=phone_number
+        name=sanitize(name.strip()),
+        email=sanitize(email.strip()),
+        message=sanitize(message.strip()),
+        phone_number=sanitize(phone_number.strip()) if phone_number else None
+
     )
     db.add(contact_entry)
     db.commit()
