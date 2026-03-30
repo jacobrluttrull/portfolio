@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login | Portfolio{% endblock %}
+
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <h1 class="page-title">Admin <span class="accent">Login</span></h1>
+
+        {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <form class="contact-form" action="/admin/login" method="post">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn-outline-accent">Login</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

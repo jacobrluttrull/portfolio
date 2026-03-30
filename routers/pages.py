@@ -4,20 +4,12 @@ from sqlalchemy.orm import Session
 from fastapi import Form
 from models.contact import Contact
 from typing import Annotated
-from database import SessionLocal
+from database import get_db
 from models.project import Project
 from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @router.get("/")

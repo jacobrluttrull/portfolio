@@ -4,10 +4,13 @@ from fastapi.staticfiles import StaticFiles
 from database import engine, Base
 from models.contact import Contact
 from models.project import Project
-from routers import pages
+from routers import pages, admin
+
+
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(admin.router)
 app.include_router(pages.router)

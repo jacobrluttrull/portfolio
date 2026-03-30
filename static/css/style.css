@@ -1,12 +1,12 @@
 /* Color Palette */
 :root {
-    --bg-primary: #1a1a2e;
-    --bg-navbar: #16162a;
+    --bg-primary: #111111;
+    --bg-navbar: #0a0a0a;
     --text-primary: #e0e0e0;
     --text-muted: #8a8a9a;
     --accent: #e63946;
-    --card-bg: #22223a;
-    --card-border: rgba(255, 255, 255, 0.05);
+    --card-bg: #1a1a1a;
+    --card-border: rgba(255, 255, 255, 0.08);
     --card-border-hover: rgba(230, 57, 70, 0.4);
 }
 
@@ -33,7 +33,7 @@ h1, h2, h3 {
 /* Navbar */
 .navbar {
     background-color: var(--bg-navbar);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 1rem 0;
 }
 
@@ -153,14 +153,17 @@ h1, h2, h3 {
 /* Projects Page */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     margin-top: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .project-card {
     background-color: var(--card-bg);
-    padding: 2rem 2.25rem;
+    padding: 1.5rem 1.75rem;
     border-radius: 4px;
     border: 1px solid var(--card-border);
     display: flex;
@@ -172,36 +175,40 @@ h1, h2, h3 {
 }
 
 .project-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .project-card p {
     color: var(--text-muted);
-    margin-bottom: 0.75rem;
-    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    font-size: 0.95rem;
 }
 
 .project-card .tech-stack {
     color: var(--accent);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .project-card .project-duration {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 .project-card .btn-outline-accent {
     margin-top: auto;
-    padding: 0.5rem 1.5rem;
-    font-size: 0.95rem;
+    padding: 0.4rem 1.25rem;
+    font-size: 0.9rem;
     align-self: flex-start;
 }
 
 .project-image {
     width: 100%;
+    max-height: 180px;
+    object-fit: cover;
     border-radius: 4px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 /* Contact Page */
@@ -246,7 +253,7 @@ h1, h2, h3 {
     border: 1px solid #2ecc71;
     border-radius: 4px;
     color: #2ecc71;
-    background: rgba(46, 204, 113, 0.05);
+    background: rgba(46, 204, 113, 0.08);
     max-width: 560px;
     text-align: center;
 }
@@ -257,7 +264,7 @@ h1, h2, h3 {
     border: 1px solid var(--accent);
     border-radius: 4px;
     color: var(--accent);
-    background: rgba(230, 57, 70, 0.05);
+    background: rgba(230, 57, 70, 0.08);
     max-width: 560px;
     text-align: center;
 }
@@ -282,6 +289,7 @@ h1, h2, h3 {
 
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .hero-buttons {
