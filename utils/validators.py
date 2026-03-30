@@ -9,7 +9,7 @@ import html
 
 def sanitize(text: str) -> str:
     """Escapes HTML characters to prevent XSS attacks.
-    For example, <script>alert('hi')</script> becomes &lt;script&gt;alert('hi')&lt;/script&gt;
+    For example, <scripts>alert('hi')</scripts> becomes &lt;scripts&gt;alert('hi')&lt;/scripts&gt;
     This means the browser displays it as plain text instead of executing it."""
     return html.escape(text)
 
