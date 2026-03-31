@@ -361,6 +361,71 @@ h1, h2, h3 {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+/* Admin Dashboard */
+.admin-logout {
+    color: var(--text-muted);
+    float: right;
+    text-decoration: none;
+}
+
+.admin-logout:hover {
+    color: var(--accent);
+}
+
+.admin-add-btn {
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.admin-table thead tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.admin-table th {
+    padding: 0.75rem;
+    color: var(--text-muted);
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-table td {
+    padding: 0.75rem;
+}
+
+.admin-action-edit {
+    color: var(--accent);
+    margin-right: 1rem;
+    text-decoration: none;
+}
+
+.admin-action-edit:hover {
+    text-decoration: underline;
+}
+
+.admin-delete-form {
+    display: inline;
+}
+
+.admin-action-delete {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.admin-action-delete:hover {
+    color: var(--accent);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .hero h1 {
