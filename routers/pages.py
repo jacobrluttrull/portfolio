@@ -2,6 +2,8 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from fastapi import Form
+from starlette.responses import RedirectResponse
+
 from models.contact import Contact
 from typing import Annotated
 from database import get_db
@@ -29,8 +31,9 @@ async def projects(request: Request, db: Session = Depends(get_db)):
 
 
 @router.get("/contact")
-async def contact(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request, "active_page": "contact"})
+async def contact(request: Request, success: str | None = None):
+    return templates.TemplateResponse("contact.html", {"request": request, "active_page": "contact", "success": success})
+
 
 @router.post("/contact")
 async def contact_submit(
@@ -62,7 +65,8 @@ async def contact_submit(
     )
     db.add(contact_entry)
     db.commit()
-    return templates.TemplateResponse("contact.html", {"request": request, "success": True, "active_page": "contact"})
+    #changing return to a RedirectResponse to avoid form resubmission on page refresh, but I want to pass a success message to the contact page. I can do this by adding a query parameter to the URL and checking for it in the GET request handler for the contact page.
+    return  RedirectResponse(url="/contact?success=true", status_code=302)
 
 
 

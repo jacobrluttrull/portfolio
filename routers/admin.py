@@ -16,7 +16,6 @@ async def require_admin(request: Request):
     token = request.cookies.get("admin_token")
     if not token or not auth.verify_jwt_token(token):
         raise HTTPException(status_code=302, headers={"Location": "/admin/login"})
-    return True
 
 @router.get("/admin/login")
 async def login(request: Request):
@@ -27,7 +26,7 @@ async def login_verify(request: Request, password: str = Form()):
     if auth.verify_password(password):
         token = auth.create_jwt_token()
         response = RedirectResponse(url="/admin", status_code=302)
-        response.set_cookie("admin_token", value=token, httponly=True)
+        response.set_cookie("admin_token", value=token, httponly=True, secure=False, samesite="Strict")
         return response
     else:
         return templates.TemplateResponse("admin/login.html", {"request": request, "error": "Invalid password."})

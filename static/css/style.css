@@ -263,10 +263,11 @@ h1, h2, h3 {
 
 .project-image {
     width: 100%;
-    max-height: 180px;
+    max-height: 250px;
     object-fit: cover;
     border-radius: 4px;
     margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 /* Contact Page */
@@ -344,6 +345,20 @@ h1, h2, h3 {
 .page-nav .btn-outline-accent {
     padding: 0.75rem 2rem;
     font-size: 1rem;
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.15);
+    padding: 0.4rem 0.6rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.4);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* Responsive */
