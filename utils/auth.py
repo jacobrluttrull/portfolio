@@ -2,6 +2,7 @@ import bcrypt
 import dotenv
 from jose import jwt, JWTError
 import os
+import datetime
 
 
 dotenv.load_dotenv()
@@ -16,7 +17,8 @@ def verify_password(password: str) -> bool:
 def create_jwt_token() -> str:
     if not jwt_secret:
         raise ValueError("JWT secret is not set in environment variables.")
-    payload = {"admin": True}
+    #add an expiration time to the token (e.g., 1 hour)
+    payload = {"admin": True, "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)}
     token = jwt.encode(payload, jwt_secret, algorithm="HS256")
     return token
 

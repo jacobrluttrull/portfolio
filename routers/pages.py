@@ -14,23 +14,23 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/")
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request, "active_page": "home"})
 
 
 @router.get("/about")
 async def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request})
+    return templates.TemplateResponse("about.html", {"request": request, "active_page": "about"})
 
 
 @router.get("/projects")
 async def projects(request: Request, db: Session = Depends(get_db)):
     projects = db.query(Project).order_by(Project.display_order).all()
-    return templates.TemplateResponse("projects.html", {"request": request, "projects": projects})
+    return templates.TemplateResponse("projects.html", {"request": request, "projects": projects, "active_page": "projects"})
 
 
 @router.get("/contact")
 async def contact(request: Request):
-    return templates.TemplateResponse("contact.html", {"request": request})
+    return templates.TemplateResponse("contact.html", {"request": request, "active_page": "contact"})
 
 @router.post("/contact")
 async def contact_submit(
@@ -51,7 +51,7 @@ async def contact_submit(
     if not validate_message(message):
         errors.append("Invalid message. Please enter a message that is at least 10 characters long.")
     if errors:
-        return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "message": message, "phone_number": phone_number})
+        return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
     contact_entry = Contact(
         name=sanitize(name.strip()),
@@ -62,7 +62,7 @@ async def contact_submit(
     )
     db.add(contact_entry)
     db.commit()
-    return templates.TemplateResponse("contact.html", {"request": request, "success": True})
+    return templates.TemplateResponse("contact.html", {"request": request, "success": True, "active_page": "contact"})
 
 
 
