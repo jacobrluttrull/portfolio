@@ -10,8 +10,6 @@ import dotenv
 dotenv.load_dotenv()
 
 from database import engine, Base
-from models.contact import Contact
-from models.project import Project
 from routers import pages, admin
 
 

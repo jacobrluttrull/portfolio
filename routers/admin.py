@@ -3,10 +3,11 @@ import utils.auth as auth
 from fastapi import APIRouter, Depends, Request, Form, HTTPException
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from database import get_db
 from models.project import Project
 from fastapi.responses import RedirectResponse
-from utils.validators import sanitize
+from utils.validators import sanitize, validate_url
 
 
 router = APIRouter()
@@ -59,6 +60,10 @@ async def add_project(
     db: Session = Depends(get_db),
     admin: bool = Depends(require_admin)
 ):
+    if not validate_url(github_link):
+        return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Invalid GitHub link. Please enter a valid URL."})
+    if image_url and not validate_url(image_url):
+        return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Invalid image URL. Please enter a valid URL."})
     new_project = Project(
         title=sanitize(title),
         description=sanitize(description),
@@ -68,16 +73,23 @@ async def add_project(
         duration=sanitize(duration),
         display_order=display_order
     )
-    db.add(new_project)
-    db.commit()
+    try:
+        db.add(new_project)
+        db.commit()
+    except SQLAlchemyError:
+        db.rollback()
+        return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Failed to save project. Please try again."})
     return RedirectResponse(url="/admin", status_code=302)
 
 @router.post("/admin/delete/{project_id}")
 async def delete_project(request: Request, project_id: int, db: Session = Depends(get_db), admin: bool = Depends(require_admin)):
     project = db.query(Project).filter(Project.id == project_id).first()
     if project:
-        db.delete(project)
-        db.commit()
+        try:
+            db.delete(project)
+            db.commit()
+        except SQLAlchemyError:
+            db.rollback()
     return RedirectResponse(url="/admin", status_code=302)
 
 @router.get("/admin/edit/{project_id}")
@@ -104,6 +116,10 @@ async def update_project(
 ):
     project = db.query(Project).filter(Project.id == project_id).first()
     if project:
+        if not validate_url(github_link):
+            return templates.TemplateResponse("admin/edit.html", {"request": request, "project": project, "error": "Invalid GitHub link. Please enter a valid URL."})
+        if image_url and not validate_url(image_url):
+            return templates.TemplateResponse("admin/edit.html", {"request": request, "project": project, "error": "Invalid image URL. Please enter a valid URL."})
         project.title = sanitize(title)
         project.description = sanitize(description)
         project.tech_stack = sanitize(tech_stack)
@@ -111,5 +127,9 @@ async def update_project(
         project.image_url = image_url
         project.duration = sanitize(duration)
         project.display_order = display_order
-        db.commit()
+        try:
+            db.commit()
+        except SQLAlchemyError:
+            db.rollback()
+            return templates.TemplateResponse("admin/edit.html", {"request": request, "project": project, "error": "Failed to update project. Please try again."})
     return RedirectResponse(url="/admin", status_code=302)

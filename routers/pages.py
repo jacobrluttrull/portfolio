@@ -7,8 +7,9 @@ from starlette.responses import RedirectResponse
 from models.contact import Contact
 from typing import Annotated
 from database import get_db
+from sqlalchemy.exc import SQLAlchemyError
 from models.project import Project
-from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize
+from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize, validate_url
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -53,8 +54,11 @@ async def contact_submit(
         errors.append("Invalid phone number. Please enter a valid phone number.")
     if not validate_message(message):
         errors.append("Invalid message. Please enter a message that is at least 10 characters long.")
+    if not validate_url(message):
+        errors.append("Invalid message. Please enter a message that does not contain URLs.")
     if errors:
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "message": message, "phone_number": phone_number, "active_page": "contact"})
+
 
     contact_entry = Contact(
         name=sanitize(name.strip()),
@@ -63,10 +67,14 @@ async def contact_submit(
         phone_number=sanitize(phone_number.strip()) if phone_number else None
 
     )
-    db.add(contact_entry)
-    db.commit()
+    try:
+        db.add(contact_entry)
+        db.commit()
+    except SQLAlchemyError:
+        db.rollback()
+        return templates.TemplateResponse("contact.html", {"request": request, "errors": ["Something went wrong. Please try again."], "name": name, "email": email, "message": message, "phone_number": phone_number, "active_page": "contact"})
     #changing return to a RedirectResponse to avoid form resubmission on page refresh, but I want to pass a success message to the contact page. I can do this by adding a query parameter to the URL and checking for it in the GET request handler for the contact page.
-    return  RedirectResponse(url="/contact?success=true", status_code=302)
+    return RedirectResponse(url="/contact?success=true", status_code=302)
 
 
 
