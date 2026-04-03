@@ -3,7 +3,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
 import os
 import dotenv
 from starlette_csrf import CSRFMiddleware
@@ -20,7 +19,9 @@ from routers import pages, admin
 
 
 Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
+
 templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(CSRFMiddleware, secret=CSRF_SECRET)
@@ -34,6 +35,8 @@ async def add_security_headers(request: Request, call_next):
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     response.headers["Referrer-Policy"] = "no-referrer"
     return response
+
+
 
 
 @app.exception_handler(StarletteHTTPException)
