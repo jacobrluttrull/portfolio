@@ -6,8 +6,13 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 import os
 import dotenv
+from starlette_csrf import CSRFMiddleware
 
 dotenv.load_dotenv()
+CSRF_SECRET = os.getenv("CSRF_SECRET")
+if not CSRF_SECRET:
+    raise ValueError("CSRF_SECRET environment variable is not set.")
+
 
 from database import engine, Base
 from routers import pages, admin
@@ -17,6 +22,18 @@ from routers import pages, admin
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+app.add_middleware(CSRFMiddleware, secret=CSRF_SECRET)
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    return response
 
 
 @app.exception_handler(StarletteHTTPException)

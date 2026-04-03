@@ -54,8 +54,6 @@ async def contact_submit(
         errors.append("Invalid phone number. Please enter a valid phone number.")
     if not validate_message(message):
         errors.append("Invalid message. Please enter a message that is at least 10 characters long.")
-    if not validate_url(message):
-        errors.append("Invalid message. Please enter a message that does not contain URLs.")
     if errors:
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
