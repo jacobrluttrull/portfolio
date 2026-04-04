@@ -33,6 +33,15 @@ def validate_email(email: str) -> bool:
     else:
         return False
 
+def validate_subject(subject: str) -> bool:
+    subject = subject.strip()
+    pattern = r'^[\w\s.,!?\'\"()\-@#&:]+$'
+    if not re.fullmatch(pattern, subject):
+        return False
+    if len(subject) < 2 or len(subject) > 200:
+        return False
+    return True
+
 def validate_phone(phone: str) -> bool:
     phone = phone.strip()
     pattern = r"^\+?[\d\s\-()]{7,20}$"

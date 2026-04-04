@@ -3,7 +3,7 @@ import os
 from email.mime.text import MIMEText
 
 
-def send_contact_notification(name: str, email: str, message: str, phone_number: str | None = None) -> None:
+def send_contact_notification(name: str, email: str, subject: str, message: str, phone_number: str | None = None) -> None:
     sender = os.getenv("EMAIL_ADDRESS")
     password = os.getenv("EMAIL_APP_PASSWORD")
     recipient = os.getenv("EMAIL_RECIPIENT")
@@ -12,10 +12,11 @@ def send_contact_notification(name: str, email: str, message: str, phone_number:
         return
 
     phone_line = f"Phone: {phone_number}\n" if phone_number else ""
-    body = f"New contact form submission:\n\nName: {name}\nEmail: {email}\n{phone_line}Message:\n{message}"
+    body = f"New contact form submission:\n\nName: {name}\nEmail: {email}\nSubject: {subject}\n{phone_line}Message:\n{message}"
+
 
     msg = MIMEText(body)
-    msg["Subject"] = f"[Portfolio] New message from {name}"
+    msg["Subject"] = f"[Portfolio] {subject} New message from {name}"
     msg["From"] = f"Portfolio Contact Form <{sender}>"
     msg["To"] = recipient
 
