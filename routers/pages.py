@@ -10,6 +10,7 @@ from database import get_db
 from sqlalchemy.exc import SQLAlchemyError
 from models.project import Project
 from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize, validate_url
+from utils.email_notify import send_contact_notification
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -71,6 +72,8 @@ async def contact_submit(
     except SQLAlchemyError:
         db.rollback()
         return templates.TemplateResponse("contact.html", {"request": request, "errors": ["Something went wrong. Please try again."], "name": name, "email": email, "message": message, "phone_number": phone_number, "active_page": "contact"})
+
+    send_contact_notification(name, email, message, phone_number)
     #changing return to a RedirectResponse to avoid form resubmission on page refresh, but I want to pass a success message to the contact page. I can do this by adding a query parameter to the URL and checking for it in the GET request handler for the contact page.
     return RedirectResponse(url="/contact?success=true", status_code=302)
 
