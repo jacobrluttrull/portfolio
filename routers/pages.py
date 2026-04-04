@@ -1,8 +1,11 @@
+import os
+
 from fastapi import APIRouter, Request, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from fastapi import Form
 from starlette.responses import RedirectResponse
+import httpx
 
 from models.contact import Contact
 from typing import Annotated
@@ -15,6 +18,7 @@ from utils.email_notify import send_contact_notification
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
+RECAPTCHA_SECRET_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
 
 
 @router.get("/")
@@ -46,6 +50,7 @@ async def contact_submit(
         subject: Annotated[str, Form()],
         message: Annotated[str, Form()],
         phone_number: Annotated[str | None, Form()] = None,
+        recaptcha_token: Annotated[str, Form(alias="g-recaptcha-response")] = "",
         db: Session = Depends(get_db)
 ):
     errors = []
@@ -60,6 +65,15 @@ async def contact_submit(
     if not validate_message(message):
         errors.append("Invalid message. Please enter a message that is at least 10 characters long.")
     if errors:
+        return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
+
+    async with httpx.AsyncClient() as client:
+        r = await client.post("https://www.google.com/recaptcha/api/siteverify", data={
+            "secret": os.getenv("RECAPTCHA_SECRET_KEY"),
+            "response": recaptcha_token
+        })
+    if not r.json().get("success"):
+        errors.append("reCAPTCHA verification failed. Please try again.")
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 
