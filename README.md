@@ -4,25 +4,32 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 ## Tech Stack
 - Python / FastAPI
 - SQLAlchemy + SQLite
+- Alembic (database migrations)
 - Jinja2 templates
 - Bootstrap 5.3
 - JWT authentication (admin)
+- Cloudflare Turnstile (CAPTCHA)
 
 ## Features
-- Home / hero section with social links
+- Home / hero section with social links (GitHub, LinkedIn, Instagram, Email)
 - About page with skills, education, resume download
 - Projects section (database-driven, admin-managed)
-- Contact form (validated, stored in SQLite)
+- Contact form with validation, XSS sanitization, CSRF protection, Turnstile CAPTCHA, and email notifications
 - Admin panel (JWT-protected CRUD for projects)
+- Security headers middleware (X-Frame-Options, HSTS, CSP, etc.)
 - Custom 404 page
+- Logging to `app.log`
 - Responsive design (mobile + desktop)
 
 ## Project Structure
 ```
 portfolio/
-├── main.py                  # App init, routing, exception handlers
+├── main.py                  # App init, routing, middleware, exception handlers
 ├── database.py              # SQLAlchemy engine, session, Base
 ├── requirements.txt
+│
+├── alembic/                 # Database migrations
+│   └── versions/
 │
 ├── models/
 │   ├── contact.py           # Contact form submissions
@@ -34,7 +41,9 @@ portfolio/
 │
 ├── utils/
 │   ├── auth.py              # JWT creation/verification, bcrypt password check
-│   └── validators.py        # Input validation + XSS sanitization
+│   ├── validators.py        # Input validation + XSS sanitization
+│   ├── email_notify.py      # Email notifications on contact form submission
+│   └── logger.py            # App-wide logging setup
 │
 ├── templates/
 │   ├── base.html
@@ -56,22 +65,37 @@ portfolio/
 │   └── resume/
 │
 └── scripts/
-    └── seed_projects.py     # Seed DB with sample projects
+    └── seed_projects.py     # Seed DB with all 9 projects
 ```
 
 ## Environment Variables
-Copy `.env.example` (when created) and fill in:
+Copy `.env.example` and fill in:
 - `ADMIN_PASSWORD_HASH` — bcrypt hash of your admin password
 - `JWT_SECRET` — strong random secret for token signing
+- `CSRF_SECRET` — strong random secret for CSRF middleware
 - `ENABLE_ADMIN` — set to `true` to enable the admin panel
+- `EMAIL_ADDRESS` — sending Gmail account
+- `EMAIL_APP_PASSWORD` — app password for sending account
+- `EMAIL_RECIPIENT` — your main email for receiving notifications
+- `RECAPTCHA_SITE_KEY` — Cloudflare Turnstile site key
+- `RECAPTCHA_SECRET_KEY` — Cloudflare Turnstile secret key
 
 ## Running Locally
 1. Clone the repo
 2. Create and activate a virtual environment
 3. `pip install -r requirements.txt`
-4. Set up your `.env` file
-5. `uvicorn main:app --reload`
-6. Visit `http://localhost:8000`
+4. Copy `.env.example` to `.env` and fill in values
+5. `alembic upgrade head` to set up the database
+6. `python scripts/seed_projects.py` to seed projects (optional)
+7. `python -m uvicorn main:app --reload`
+8. Visit `http://localhost:8000`
+
+## Deployment Checklist
+- [ ] Swap Turnstile test keys for real production keys
+- [ ] Set `secure=True` on admin cookie (`routers/admin.py`)
+- [ ] Add production domain to Turnstile allowed list
+- [ ] Set up hosting and point domain
+- [ ] Configure backups for `portfolio.db`
 
 ## Status
-In development.
+Nearly ready for deployment.
