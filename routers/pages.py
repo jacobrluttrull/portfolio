@@ -56,13 +56,13 @@ async def contact_submit(
 ):
     errors = []
     if not validate_name(name):
-        errors.append("Invalid name. Please enter a valid name.")
+        errors.append("Name must be between 2-65 characters and contain no special characters.")
     if not validate_email(email):
-        errors.append("Invalid email. Please enter a valid email address.")
+        errors.append("Please enter a valid email address (e.g. name@example.com).")
     if not validate_subject(subject):
-        errors.append("Invalid subject. Please enter a subject that is at least 2 characters long. Allowed characters are letters, numbers, spaces, and basic punctuation .")
+        errors.append("Subject must be between 2-200 characters. Only letters, numbers, and basic punctuation allowed.")
     if phone_number and not validate_phone(phone_number):
-        errors.append("Invalid phone number. Please enter a valid phone number.")
+        errors.append("Phone must be 7-20 characters and only contain digits, spaces, dashes, parentheses, or +.")
     if not validate_message(message):
         errors.append("Invalid message. Please enter a message that is at least 10 characters long.")
     if errors:
