@@ -90,12 +90,5 @@ Copy `.env.example` and fill in:
 7. `python -m uvicorn main:app --reload`
 8. Visit `http://localhost:8000`
 
-## Deployment Checklist
-- [ ] Swap Turnstile test keys for real production keys
-- [ ] Set `secure=True` on admin cookie (`routers/admin.py`)
-- [ ] Add production domain to Turnstile allowed list
-- [ ] Set up hosting and point domain
-- [ ] Configure backups for `portfolio.db`
-
 ## Status
 Nearly ready for deployment.
