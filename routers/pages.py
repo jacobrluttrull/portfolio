@@ -50,7 +50,7 @@ async def contact_submit(
         subject: Annotated[str, Form()],
         message: Annotated[str, Form()],
         phone_number: Annotated[str | None, Form()] = None,
-        recaptcha_token: Annotated[str, Form(alias="g-recaptcha-response")] = "",
+        turnstile_token: Annotated[str, Form(alias="cf-turnstile-response")] = "",
         db: Session = Depends(get_db)
 ):
     errors = []
@@ -68,12 +68,13 @@ async def contact_submit(
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
     async with httpx.AsyncClient() as client:
-        r = await client.post("https://www.google.com/recaptcha/api/siteverify", data={
+        r = await client.post("https://challenges.cloudflare.com/turnstile/v0/siteverify", data={
             "secret": os.getenv("RECAPTCHA_SECRET_KEY"),
-            "response": recaptcha_token
+            "response": turnstile_token
         })
+    #print(r.json()) #testing to see the response from cloudflare turnstile, I want to make sure I'm sending the request correctly and handling the response correctly. The expected response should have a "success" field that is true if the verification passed, and false if it failed. It may also have an "error-codes" field with more information about why it failed if it did.
     if not r.json().get("success"):
-        errors.append("reCAPTCHA verification failed. Please try again.")
+        errors.append("Verification failed. Please try again.")
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 

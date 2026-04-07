@@ -49,8 +49,13 @@
                 <textarea id="message" name="message" rows="6" required autocomplete="off">{{ message or '' }}</textarea>
             </div>
 
-            <div class="g-recaptcha" data-sitekey="6LcnFacsAAAAANwZqmoJDE7_pan_qawtFy6duXSJ" style="margin-bottom: 1rem;"></div>
-            <button type="submit" class="btn-outline-accent">Send Message</button>
+            <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark" data-callback="onTurnstileSuccess" style="margin-bottom: 1rem;"></div>
+            <button type="submit" id="submit-btn" class="btn-outline-accent" disabled>Send Message</button>
+            <script>
+                function onTurnstileSuccess(token) {
+                    document.getElementById("submit-btn").disabled = false;
+                }
+            </script>
             <p class="contact-direct">Or contact me directly at <a href="mailto:jacobluttrull2@gmail.com">jacobluttrull2@gmail.com</a></p>
         </form>
 
