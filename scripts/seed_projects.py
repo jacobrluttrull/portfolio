@@ -50,11 +50,52 @@ def seed_projects():
             image_url = "/static/images/aibot.png",
             duration = "January 2026 - February 2026",
             display_order = 4
-
-
-
-        )
-
+        ),
+        Project(
+            title = "Git Clone in Python",
+            description = "A hands-on implementation of Git internals in Python, following the Write Yourself a Git tutorial. Covers core Git concepts like objects, refs, and commits from scratch.",
+            tech_stack = "Python",
+            github_link = "https://github.com/jacobrluttrull/python_git",
+            image_url = "/static/images/pythongit.png",
+            duration = "November 2025 - January 2026",
+            display_order = 5
+        ),
+        Project(
+            title = "Package Route Optimizer (WGU Project)",
+            description = "A delivery routing simulation for WGUPS using a custom chaining hash table and greedy nearest-neighbor algorithm to minimize mileage across three trucks. Handles real-world constraints like deadlines, delayed packages, and grouped deliveries.",
+            tech_stack = "Python and DSA",
+            github_link = "https://github.com/jacobrluttrull/package-routing-optimizer",
+            image_url = "/static/images/packageoptimizer.png",
+            duration = "September 2025",
+            display_order = 6
+        ),
+        Project(
+            title = "Bookbot (Boot.dev Project)",
+            description = "A command-line tool that analyzes text files and reports word count and character frequency, sorted from most to least common. Built as part of the Boot.dev curriculum.",
+            tech_stack = "Python",
+            github_link = "https://github.com/jacobrluttrull/Bookbot",
+            image_url = "/static/images/bookbot.png",
+            duration = "November 2025",
+            display_order = 7
+        ),
+        Project(
+            title = "Movie Database Project",
+            description = "WGU coursework project demonstrating PostgreSQL database design and reporting. Includes custom user-defined functions, triggers, stored procedures, and automated report generation from the DVD dataset.",
+            tech_stack = "PostGreSQL and SQL",
+            github_link = "https://github.com/jacobrluttrull/D326-adv-data-mgmnt",
+            image_url = "/static/images/database326.png",
+            duration = "June 2024",
+            display_order = 8
+        ),
+        Project(
+            title = "Asteroids Game",
+            description = "A recreation of the classic Asteroids arcade game built with Python and Pygame as part of the Boot.dev curriculum. Features OOP design with player movement, shooting mechanics, collision detection, and destructible asteroids.",
+            tech_stack = "Python, Pygame",
+            github_link = "https://github.com/jacobrluttrull/asteroidsgame",
+            image_url = "/static/images/asteroids.png",
+            duration = "December 2025",
+            display_order = 9
+        ),
     ]
     if db.query(Project).count() > 0:
         print("Projects already seeded. Skipping seeding to avoid duplicates.")

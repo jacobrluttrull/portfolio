@@ -8,9 +8,11 @@ from database import get_db
 from models.project import Project
 from fastapi.responses import RedirectResponse
 from utils.validators import sanitize, validate_url
+from utils.logger import get_logger
 
 
 router = APIRouter()
+logger = get_logger(__name__)
 templates = Jinja2Templates(directory="templates")
 
 async def require_admin(request: Request):
@@ -26,14 +28,17 @@ async def login(request: Request):
 async def login_verify(request: Request, password: str = Form()):
     if auth.verify_password(password):
         token = auth.create_jwt_token()
+        logger.info("Admin login successful")
         response = RedirectResponse(url="/admin", status_code=302)
         response.set_cookie("admin_token", value=token, httponly=True, secure=False, samesite="Strict")
         return response
     else:
+        logger.warning(f"Failed admin login attempt from {request.client.host}")
         return templates.TemplateResponse("admin/login.html", {"request": request, "error": "Invalid password."})
 
 @router.get("/admin/logout")
 async def logout():
+    logger.info("Admin logged out")
     response = RedirectResponse(url="/admin/login", status_code=302)
     response.delete_cookie("admin_token")
     return response
@@ -76,8 +81,10 @@ async def add_project(
     try:
         db.add(new_project)
         db.commit()
+        logger.info(f"Project added: {title}")
     except SQLAlchemyError:
         db.rollback()
+        logger.exception(f"DB error adding project: {title}")
         return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Failed to save project. Please try again."})
     return RedirectResponse(url="/admin", status_code=302)
 
@@ -88,8 +95,10 @@ async def delete_project(request: Request, project_id: int, db: Session = Depend
         try:
             db.delete(project)
             db.commit()
+            logger.info(f"Project deleted: {project.title} (id={project_id})")
         except SQLAlchemyError:
             db.rollback()
+            logger.exception(f"DB error deleting project id={project_id}")
     return RedirectResponse(url="/admin", status_code=302)
 
 @router.get("/admin/edit/{project_id}")
@@ -129,7 +138,9 @@ async def update_project(
         project.display_order = display_order
         try:
             db.commit()
+            logger.info(f"Project updated: {title} (id={project_id})")
         except SQLAlchemyError:
             db.rollback()
+            logger.exception(f"DB error updating project id={project_id}")
             return templates.TemplateResponse("admin/edit.html", {"request": request, "project": project, "error": "Failed to update project. Please try again."})
     return RedirectResponse(url="/admin", status_code=302)

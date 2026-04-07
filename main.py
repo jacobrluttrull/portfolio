@@ -6,6 +6,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 import os
 import dotenv
 from starlette_csrf import CSRFMiddleware
+from utils.logger import get_logger
 
 dotenv.load_dotenv()
 CSRF_SECRET = os.getenv("CSRF_SECRET")
@@ -17,6 +18,9 @@ from database import engine
 from routers import pages, admin
 
 app = FastAPI()
+
+logger = get_logger(__name__)
+logger.info("Portfolio app starting up...")
 
 templates = Jinja2Templates(directory="templates")
 

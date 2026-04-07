@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from fastapi import Form
 from starlette.responses import RedirectResponse
 import httpx
-
+from utils.logger import get_logger
 from models.contact import Contact
 from typing import Annotated
 from database import get_db
@@ -17,6 +17,7 @@ from utils.validators import validate_message, validate_email, validate_phone, v
 from utils.email_notify import send_contact_notification
 
 router = APIRouter()
+logger = get_logger(__name__)
 templates = Jinja2Templates(directory="templates")
 RECAPTCHA_SECRET_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
 
@@ -75,6 +76,7 @@ async def contact_submit(
     #print(r.json()) #testing to see the response from cloudflare turnstile, I want to make sure I'm sending the request correctly and handling the response correctly. The expected response should have a "success" field that is true if the verification passed, and false if it failed. It may also have an "error-codes" field with more information about why it failed if it did.
     if not r.json().get("success"):
         errors.append("Verification failed. Please try again.")
+        logger.warning(f"Turnstile Verification failed for {email}.")
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 
@@ -91,11 +93,13 @@ async def contact_submit(
         db.commit()
     except SQLAlchemyError:
         db.rollback()
+        logger.exception(f"DB error while saving contact form submission from {email}.")
         return templates.TemplateResponse("contact.html", {"request": request, "errors": ["Something went wrong. Please try again."], "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 
     send_contact_notification(name, email, subject, message, phone_number)
     #changing return to a RedirectResponse to avoid form resubmission on page refresh, but I want to pass a success message to the contact page. I can do this by adding a query parameter to the URL and checking for it in the GET request handler for the contact page.
+    logger.info(f"New contact form submission: Name={name}, Email={email}, Subject={subject}, Phone={phone_number}")
     return RedirectResponse(url="/contact?success=true", status_code=302)
 
 
