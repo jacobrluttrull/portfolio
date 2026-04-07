@@ -13,12 +13,8 @@ if not CSRF_SECRET:
     raise ValueError("CSRF_SECRET environment variable is not set.")
 
 
-from database import engine, Base
+from database import engine
 from routers import pages, admin
-
-
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
