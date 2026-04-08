@@ -15,7 +15,7 @@ from models.project import Project
 from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize, validate_url, \
     validate_subject
 from utils.email_notify import send_contact_notification
-
+from fastapi import BackgroundTasks
 router = APIRouter()
 logger = get_logger(__name__)
 templates = Jinja2Templates(directory="templates")
@@ -45,7 +45,9 @@ async def contact(request: Request, success: str | None = None):
 
 @router.post("/contact")
 async def contact_submit(
+
         request: Request,
+        background_tasks: BackgroundTasks,
         name: Annotated[str, Form()],
         email: Annotated[str, Form()],
         subject: Annotated[str, Form()],
@@ -97,7 +99,8 @@ async def contact_submit(
         return templates.TemplateResponse("contact.html", {"request": request, "errors": ["Something went wrong. Please try again."], "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 
-    send_contact_notification(name, email, subject, message, phone_number)
+    background_tasks.add_task(send_contact_notification, name, email, subject, message, phone_number)
+
     #changing return to a RedirectResponse to avoid form resubmission on page refresh, but I want to pass a success message to the contact page. I can do this by adding a query parameter to the URL and checking for it in the GET request handler for the contact page.
     logger.info(f"New contact form submission: Name={name}, Email={email}, Subject={subject}, Phone={phone_number}")
     return RedirectResponse(url="/contact?success=true", status_code=302)

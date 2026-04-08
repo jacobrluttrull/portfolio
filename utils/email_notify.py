@@ -1,7 +1,10 @@
 import smtplib
 import os
+import time
+from utils.logger import get_logger
 from email.mime.text import MIMEText
 
+logger = get_logger(__name__)
 
 def send_contact_notification(name: str, email: str, subject: str, message: str, phone_number: str | None = None) -> None:
     sender = os.getenv("EMAIL_ADDRESS")
@@ -20,6 +23,17 @@ def send_contact_notification(name: str, email: str, subject: str, message: str,
     msg["From"] = f"Portfolio Contact Form <{sender}>"
     msg["To"] = recipient
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(sender, password)
-        server.sendmail(sender, recipient, msg.as_string())
+    for i in range(3):
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                server.login(sender, password)
+                server.sendmail(sender, recipient, msg.as_string())
+            break
+        except Exception as e:
+            time.sleep(8)
+            if i == 2:
+                logger.error(f"Failed to send contact notification email after 3 attempts: {e}")
+
+
+
+
