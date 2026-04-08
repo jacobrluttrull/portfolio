@@ -78,7 +78,7 @@ async def contact_submit(
     #print(r.json()) #testing to see the response from cloudflare turnstile, I want to make sure I'm sending the request correctly and handling the response correctly. The expected response should have a "success" field that is true if the verification passed, and false if it failed. It may also have an "error-codes" field with more information about why it failed if it did.
     if not r.json().get("success"):
         errors.append("Verification failed. Please try again.")
-        logger.warning(f"Turnstile Verification failed for {email}.")
+        logger.warning(f"Turnstile Verification failed.")
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 

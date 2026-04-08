@@ -9,7 +9,7 @@
     <div class="container">
         <h1 class="page-title">Contact <span class="accent">Me</span></h1>
 
-        {% if success %}
+        {% if success == 'true' %}
         <div class="success-message">
             <p>Message sent successfully! I'll get back to you soon.</p>
         </div>
@@ -49,15 +49,15 @@
                 <textarea id="message" name="message" rows="6" required autocomplete="off">{{ message or '' }}</textarea>
             </div>
 
-            <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark" data-callback="onTurnstileSuccess" style="margin-bottom: 1rem;"></div>
+            <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="dark" data-callback="onTurnstileSuccess"></div>
             <button type="submit" id="submit-btn" class="btn-outline-accent" disabled>Send Message</button>
-            <script>
-                function onTurnstileSuccess(token) {
-                    document.getElementById("submit-btn").disabled = false;
-                }
-            </script>
             <p class="contact-direct">Or contact me directly at <a href="mailto:jacobluttrull2@gmail.com">jacobluttrull2@gmail.com</a></p>
         </form>
+        <script>
+            function onTurnstileSuccess(token) {
+                document.getElementById("submit-btn").disabled = false;
+            }
+        </script>
 
         <div class="page-nav">
             <a href="/" class="btn-outline-accent">Back to Home</a>
