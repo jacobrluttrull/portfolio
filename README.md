@@ -3,7 +3,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 
 ## Tech Stack
 - Python / FastAPI
-- SQLAlchemy + SQLite
+- SQLAlchemy + PostgreSQL (SQLite locally)
 - Alembic (database migrations)
 - Jinja2 templates
 - Bootstrap 5.3
@@ -18,7 +18,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 - Admin panel (JWT-protected CRUD for projects)
 - Security headers middleware (X-Frame-Options, HSTS, CSP, etc.)
 - Custom 404 page
-- Logging to `app.log`
+- Rotating file logging
 - Responsive design (mobile + desktop)
 
 ## Project Structure
@@ -27,6 +27,7 @@ portfolio/
 ├── main.py                  # App init, routing, middleware, exception handlers
 ├── database.py              # SQLAlchemy engine, session, Base
 ├── requirements.txt
+├── Procfile                 # Railway deployment start command
 │
 ├── alembic/                 # Database migrations
 │   └── versions/
@@ -64,12 +65,18 @@ portfolio/
 │   ├── favicon/
 │   └── resume/
 │
-└── scripts/
-    └── seed_projects.py     # Seed DB with all 9 projects
+├── scripts/
+│   └── seed_projects.py     # Seed DB with portfolio projects
+│
+└── tests/
+    ├── conftest.py          # TestClient setup, fixtures, in-memory DB
+    ├── test_routes.py       # Integration tests for all routes
+    └── test_validators.py   # Unit tests for input validators
 ```
 
 ## Environment Variables
 Copy `.env.example` and fill in:
+- `DATABASE_URL` — PostgreSQL connection string (defaults to SQLite locally if not set)
 - `ADMIN_PASSWORD_HASH` — bcrypt hash of your admin password
 - `JWT_SECRET` — strong random secret for token signing
 - `CSRF_SECRET` — strong random secret for CSRF middleware
@@ -77,7 +84,6 @@ Copy `.env.example` and fill in:
 - `EMAIL_ADDRESS` — sending Gmail account
 - `EMAIL_APP_PASSWORD` — app password for sending account
 - `EMAIL_RECIPIENT` — your main email for receiving notifications
-- `RECAPTCHA_SITE_KEY` — Cloudflare Turnstile site key
 - `RECAPTCHA_SECRET_KEY` — Cloudflare Turnstile secret key
 
 ## Running Locally
@@ -86,9 +92,17 @@ Copy `.env.example` and fill in:
 3. `pip install -r requirements.txt`
 4. Copy `.env.example` to `.env` and fill in values
 5. `alembic upgrade head` to set up the database
-6. `python scripts/seed_projects.py` to seed projects (optional)
+6. `python scripts/seed_projects.py` to seed projects
 7. `python -m uvicorn main:app --reload`
 8. Visit `http://localhost:8000`
 
+## Running Tests
+```bash
+python -m pytest tests/ -v
+```
+
+## Deployment
+Deployed on Railway. Connects to a Railway PostgreSQL database via `DATABASE_URL`.
+
 ## Status
-Nearly ready for deployment.
+Live.

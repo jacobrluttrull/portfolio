@@ -14,7 +14,6 @@ if not CSRF_SECRET:
     raise ValueError("CSRF_SECRET environment variable is not set.")
 
 
-from database import engine
 from routers import pages, admin
 
 seed_projects()

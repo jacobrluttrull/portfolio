@@ -12,8 +12,7 @@ from typing import Annotated
 from database import get_db
 from sqlalchemy.exc import SQLAlchemyError
 from models.project import Project
-from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize, validate_url, \
-    validate_subject
+from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize, validate_subject
 from utils.email_notify import send_contact_notification
 from fastapi import BackgroundTasks
 router = APIRouter()
