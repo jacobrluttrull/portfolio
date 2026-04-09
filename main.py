@@ -3,6 +3,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 import os
 import dotenv
 from starlette_csrf import CSRFMiddleware
@@ -17,11 +20,15 @@ if not CSRF_SECRET:
 from routers import pages, admin
 
 seed_projects()
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
 
 
 
 
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 logger = get_logger(__name__)
 logger.info("Portfolio app starting up...")

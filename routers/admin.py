@@ -1,6 +1,8 @@
 import utils.auth as auth
 
 from fastapi import APIRouter, Depends, Request, Form, HTTPException
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -12,6 +14,7 @@ from utils.logger import get_logger
 
 
 router = APIRouter()
+limiter = Limiter(key_func=get_remote_address)
 logger = get_logger(__name__)
 templates = Jinja2Templates(directory="templates")
 
@@ -25,6 +28,7 @@ async def login(request: Request):
     return templates.TemplateResponse("admin/login.html", {"request": request})
 
 @router.post("/admin/login")
+@limiter.limit("5/minute")
 async def login_verify(request: Request, password: str = Form()):
     if auth.verify_password(password):
         token = auth.create_jwt_token()
