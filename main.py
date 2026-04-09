@@ -7,7 +7,7 @@ import os
 import dotenv
 from starlette_csrf import CSRFMiddleware
 from utils.logger import get_logger
-
+from scripts.seed_projects import seed_projects
 dotenv.load_dotenv()
 CSRF_SECRET = os.getenv("CSRF_SECRET")
 if not CSRF_SECRET:
@@ -17,7 +17,12 @@ if not CSRF_SECRET:
 from database import engine
 from routers import pages, admin
 
+seed_projects()
 app = FastAPI()
+
+
+
+
 
 logger = get_logger(__name__)
 logger.info("Portfolio app starting up...")
