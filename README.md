@@ -1,6 +1,10 @@
 # Portfolio
 Jacob Luttrull's personal portfolio website showcasing projects, skills, and contact info.
 
+## Link to Site
+[jacobrluttrull.com](https://jacobrluttrull.com)
+
+
 ## Tech Stack
 - Python / FastAPI
 - SQLAlchemy + PostgreSQL (SQLite locally)
