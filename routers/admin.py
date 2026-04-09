@@ -30,7 +30,7 @@ async def login_verify(request: Request, password: str = Form()):
         token = auth.create_jwt_token()
         logger.info("Admin login successful")
         response = RedirectResponse(url="/admin", status_code=302)
-        response.set_cookie("admin_token", value=token, httponly=True, secure=False, samesite="Strict")
+        response.set_cookie("admin_token", value=token, httponly=True, secure=True, samesite="Strict")
         return response
     else:
         logger.warning(f"Failed admin login attempt from {request.client.host}")
