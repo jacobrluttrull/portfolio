@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 from fastapi import Form
 from starlette.responses import RedirectResponse
 import httpx
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from utils.logger import get_logger
 from models.contact import Contact
 from typing import Annotated
@@ -16,6 +18,7 @@ from utils.validators import validate_message, validate_email, validate_phone, v
 from utils.email_notify import send_contact_notification
 from fastapi import BackgroundTasks
 router = APIRouter()
+limiter = Limiter(key_func=get_remote_address)
 logger = get_logger(__name__)
 templates = Jinja2Templates(directory="templates")
 RECAPTCHA_SECRET_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
@@ -43,6 +46,7 @@ async def contact(request: Request, success: str | None = None):
 
 
 @router.post("/contact")
+@limiter.limit("10/minute")
 async def contact_submit(
 
         request: Request,
