@@ -13,6 +13,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 - Bootstrap 5.3
 - JWT authentication (admin)
 - Cloudflare Turnstile (CAPTCHA)
+- Resend (email notifications)
 
 ## Features
 - Home / hero section with social links (GitHub, LinkedIn, Instagram, Email)
@@ -89,9 +90,8 @@ Copy `.env.example` and fill in:
 - `JWT_SECRET` — strong random secret for token signing
 - `CSRF_SECRET` — strong random secret for CSRF middleware
 - `ENABLE_ADMIN` — set to `true` to enable the admin panel
-- `EMAIL_ADDRESS` — sending Gmail account
-- `EMAIL_APP_PASSWORD` — app password for sending account
-- `EMAIL_RECIPIENT` — your main email for receiving notifications
+- `RESEND_API_KEY` — Resend API key for email notifications
+- `EMAIL_RECIPIENT` — your email for receiving contact form notifications
 - `RECAPTCHA_SITE_KEY` — Cloudflare Turnstile site key
 - `RECAPTCHA_SECRET_KEY` — Cloudflare Turnstile secret key
 
