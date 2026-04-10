@@ -60,7 +60,7 @@ def validate_url(url: str) -> bool:
     url = url.strip()
     if url.startswith("/static/"):
         return True
-    pattern = r'^(https?://)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(/[\w\-._~:/?#[\]@!$&\'()*+,;=]*)?$'
+    pattern = r'^(https?://)(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(/[\w\-._~:/?#[\]@!$&\'()*+,;=]*)?$'
     if re.fullmatch(pattern, url):
         return True
     else:
