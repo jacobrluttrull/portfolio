@@ -19,6 +19,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 - About page with skills, education, resume download
 - Projects section (database-driven, admin-managed)
 - Contact form with validation, XSS sanitization, CSRF protection, Turnstile CAPTCHA, and email notifications
+- Rate limiting on contact form and admin login
 - Admin panel (JWT-protected CRUD for projects)
 - Security headers middleware (X-Frame-Options, HSTS, CSP, etc.)
 - Custom 404 page
@@ -65,6 +66,9 @@ portfolio/
 │
 ├── static/
 │   ├── css/style.css
+│   ├── js/
+│   │   ├── main.js          # CSRF handler + form submission
+│   │   └── contact.js       # Turnstile callback
 │   ├── images/
 │   ├── favicon/
 │   └── resume/
@@ -88,6 +92,7 @@ Copy `.env.example` and fill in:
 - `EMAIL_ADDRESS` — sending Gmail account
 - `EMAIL_APP_PASSWORD` — app password for sending account
 - `EMAIL_RECIPIENT` — your main email for receiving notifications
+- `RECAPTCHA_SITE_KEY` — Cloudflare Turnstile site key
 - `RECAPTCHA_SECRET_KEY` — Cloudflare Turnstile secret key
 
 ## Running Locally
