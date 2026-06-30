@@ -73,6 +73,9 @@ async def add_project(
         return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Invalid GitHub link. Please enter a valid URL."})
     if image_url and not validate_url(image_url):
         return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Invalid image URL. Please enter a valid URL."})
+    db.query(Project).filter(Project.display_order >= display_order).update(
+        {"display_order": Project.display_order + 1}, synchronize_session=False
+    )
     new_project = Project(
         title=sanitize(title),
         description=sanitize(description),
@@ -90,6 +93,29 @@ async def add_project(
         db.rollback()
         logger.exception(f"DB error adding project: {title}")
         return templates.TemplateResponse("admin/add.html", {"request": request, "error": "Failed to save project. Please try again."})
+    return RedirectResponse(url="/admin", status_code=302)
+
+@router.post("/admin/reorder/{project_id}/{direction}")
+async def reorder_project(request: Request, project_id: int, direction: str, db: Session = Depends(get_db), admin: bool = Depends(require_admin)):
+    projects = db.query(Project).order_by(Project.display_order).all()
+    idx = next((i for i, p in enumerate(projects) if p.id == project_id), None)
+    if idx is None or direction not in ("up", "down"):
+        return RedirectResponse(url="/admin", status_code=302)
+
+    if direction == "up" and idx > 0:
+        projects[idx], projects[idx - 1] = projects[idx - 1], projects[idx]
+    elif direction == "down" and idx < len(projects) - 1:
+        projects[idx], projects[idx + 1] = projects[idx + 1], projects[idx]
+
+    for i, p in enumerate(projects):
+        p.display_order = i + 1
+
+    try:
+        db.commit()
+    except SQLAlchemyError:
+        db.rollback()
+        logger.exception(f"DB error reordering project id={project_id}")
+
     return RedirectResponse(url="/admin", status_code=302)
 
 @router.post("/admin/delete/{project_id}")
@@ -133,6 +159,20 @@ async def update_project(
             return templates.TemplateResponse("admin/edit.html", {"request": request, "project": project, "error": "Invalid GitHub link. Please enter a valid URL."})
         if image_url and not validate_url(image_url):
             return templates.TemplateResponse("admin/edit.html", {"request": request, "project": project, "error": "Invalid image URL. Please enter a valid URL."})
+        old_order = project.display_order
+        if display_order != old_order:
+            if display_order < old_order:
+                db.query(Project).filter(
+                    Project.id != project_id,
+                    Project.display_order >= display_order,
+                    Project.display_order < old_order
+                ).update({"display_order": Project.display_order + 1}, synchronize_session=False)
+            else:
+                db.query(Project).filter(
+                    Project.id != project_id,
+                    Project.display_order > old_order,
+                    Project.display_order <= display_order
+                ).update({"display_order": Project.display_order - 1}, synchronize_session=False)
         project.title = sanitize(title)
         project.description = sanitize(description)
         project.tech_stack = sanitize(tech_stack)

@@ -26,6 +26,12 @@
                     <td>{{ project.title }}</td>
                     <td>{{ project.display_order }}</td>
                     <td>
+                        <form action="/admin/reorder/{{ project.id }}/up" method="post" class="admin-delete-form">
+                            <button type="submit" class="admin-action-order">&#9650;</button>
+                        </form>
+                        <form action="/admin/reorder/{{ project.id }}/down" method="post" class="admin-delete-form">
+                            <button type="submit" class="admin-action-order">&#9660;</button>
+                        </form>
                         <a href="/admin/edit/{{ project.id }}" class="admin-action-edit">Edit</a>
                         <form action="/admin/delete/{{ project.id }}" method="post" class="admin-delete-form">
                             <button type="submit" class="admin-action-delete">Delete</button>
