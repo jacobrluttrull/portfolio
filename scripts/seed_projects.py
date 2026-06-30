@@ -57,13 +57,22 @@ def seed_projects():
                 display_order = 4
             ),
             Project(
+                title = "Pokedex CLI",
+                description = "A command-line Pokedex built in Go that queries the PokeAPI to explore Pokémon locations, catch Pokémon, and inspect their stats. Features a REPL-style interface with in-memory caching. Built as part of the Boot.dev Go curriculum.",
+                tech_stack = "Go, PokeAPI, HTTP",
+                github_link = "https://github.com/jacobrluttrull/pokedex",
+                image_url = "/static/images/pokedexcli.png",
+                duration = "June 2026",
+                display_order = 5
+            ),
+            Project(
                 title = "Git Clone in Python",
                 description = "A hands-on implementation of Git internals in Python, following the Write Yourself a Git tutorial. Covers core Git concepts like objects, refs, and commits from scratch.",
                 tech_stack = "Python",
                 github_link = "https://github.com/jacobrluttrull/python_git",
                 image_url = "/static/images/pythongit.png",
                 duration = "November 2025 - January 2026",
-                display_order = 5
+                display_order = 6
             ),
             Project(
                 title = "Package Route Optimizer (WGU Project)",
@@ -72,7 +81,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/package-routing-optimizer",
                 image_url = "/static/images/packageoptimizer.png",
                 duration = "September 2025",
-                display_order = 6
+                display_order = 7
             ),
             Project(
                 title = "Bookbot (Boot.dev Project)",
@@ -81,7 +90,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/Bookbot",
                 image_url = "/static/images/bookbot.png",
                 duration = "November 2025",
-                display_order = 7
+                display_order = 8
             ),
             Project(
                 title = "Movie Database Project",
@@ -90,7 +99,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/D326-adv-data-mgmnt",
                 image_url = "/static/images/database326.png",
                 duration = "June 2024",
-                display_order = 8
+                display_order = 9
             ),
             Project(
                 title = "Asteroids Game",
@@ -99,7 +108,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/asteroidsgame",
                 image_url = "/static/images/asteroids.png",
                 duration = "December 2025",
-                display_order = 9
+                display_order = 10
             ),
         ]
 
