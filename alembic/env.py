@@ -18,9 +18,13 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from database import Base
+from database import Base, DATABASE_URL
 from models import contact, project
 target_metadata = Base.metadata
+
+# Use the same database as the app (database.py loads .env and requires DATABASE_URL),
+# overriding the placeholder sqlalchemy.url in alembic.ini
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

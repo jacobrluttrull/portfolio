@@ -7,6 +7,7 @@ from sqlalchemy.pool import StaticPool
 from unittest.mock import AsyncMock, MagicMock, patch
 
 # Set required env vars before importing the app
+os.environ["DATABASE_URL"] = "sqlite:///:memory:"
 os.environ.setdefault("CSRF_SECRET", "a" * 64)
 os.environ.setdefault("ENABLE_ADMIN", "true")
 os.environ.setdefault("ADMIN_PASSWORD_HASH", "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW")  # bcrypt of "secret"

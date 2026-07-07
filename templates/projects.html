@@ -14,7 +14,7 @@
             <div class="project-card">
                 {% if project.image_url %}
                 <a href="{{ project.image_url }}" target="_blank" rel="noopener noreferrer">
-                    <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image">
+                    <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" loading="lazy" decoding="async" width="800" height="450">
                 </a>
                 {% endif %}
                 <h3>{{ project.title }}</h3>

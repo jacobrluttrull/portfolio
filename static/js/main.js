@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+        themeToggle.addEventListener("click", function () {
+            const isLight = document.documentElement.getAttribute("data-theme") === "light";
+            const next = isLight ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
     const token = document.cookie.split("; ").find(r => r.startsWith("csrftoken="))?.split("=")[1];
     if (!token) return;
     document.querySelectorAll("form").forEach(form => {
@@ -15,7 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     window.location.href = res.url;
                 } else {
                     res.text().then(html => {
-                        document.documentElement.innerHTML = html;
+                        document.open();
+                        document.write(html);
+                        document.close();
                     });
                 }
             }).catch(() => {

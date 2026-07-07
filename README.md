@@ -7,7 +7,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 
 ## Tech Stack
 - Python / FastAPI
-- SQLAlchemy + PostgreSQL (SQLite locally)
+- SQLAlchemy + PostgreSQL
 - Alembic (database migrations)
 - Jinja2 templates
 - Bootstrap 5.3
@@ -16,9 +16,9 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 - Resend (email notifications)
 
 ## Features
-- Home / hero section with social links (GitHub, LinkedIn, Instagram, Email)
-- About page with skills, education, resume download
-- Projects section (database-driven, admin-managed)
+- Home page: hero (name, tagline, resume download, social links — GitHub, LinkedIn, Instagram, Discord, Email) followed by About/Skills/Education on the same page (`/about` 301-redirects to `/`)
+- Light/dark theme toggle — auto-detects OS preference, manual override persisted in `localStorage`
+- Projects section (database-driven, admin-managed, git is the source of truth via an upsert-and-prune seed sync)
 - Contact form with validation, XSS sanitization, CSRF protection, Turnstile CAPTCHA, and email notifications
 - Rate limiting on contact form and admin login
 - Admin panel (JWT-protected CRUD for projects)
@@ -53,9 +53,8 @@ portfolio/
 │   └── logger.py            # App-wide logging setup
 │
 ├── templates/
-│   ├── base.html
-│   ├── index.html
-│   ├── about.html
+│   ├── base.html             # Shell: navbar, theme toggle, footer
+│   ├── index.html            # Home: hero + merged About/Skills/Education
 │   ├── projects.html
 │   ├── contact.html
 │   ├── 404.html
@@ -68,14 +67,16 @@ portfolio/
 ├── static/
 │   ├── css/style.css
 │   ├── js/
-│   │   ├── main.js          # CSRF handler + form submission
+│   │   ├── theme-init.js    # Pre-paint light/dark detection (must be external — CSP blocks inline scripts)
+│   │   ├── main.js          # CSRF handler + form submission + theme toggle
 │   │   └── contact.js       # Turnstile callback
-│   ├── images/
+│   ├── images/               # .webp only
 │   ├── favicon/
 │   └── resume/
 │
 ├── scripts/
-│   └── seed_projects.py     # Seed DB with portfolio projects
+│   ├── seed_projects.py     # Upsert-and-prune sync of portfolio projects (git is source of truth)
+│   └── compress_images.py   # PNG/JPG -> WEBP, preserves real alpha transparency
 │
 └── tests/
     ├── conftest.py          # TestClient setup, fixtures, in-memory DB
@@ -85,7 +86,7 @@ portfolio/
 
 ## Environment Variables
 Copy `.env.example` and fill in:
-- `DATABASE_URL` — PostgreSQL connection string (defaults to SQLite locally if not set)
+- `DATABASE_URL` — PostgreSQL connection string (required; e.g. `postgresql://postgres:postgres@localhost:5433/portfolio`)
 - `ADMIN_PASSWORD_HASH` — bcrypt hash of your admin password
 - `JWT_SECRET` — strong random secret for token signing
 - `CSRF_SECRET` — strong random secret for CSRF middleware
@@ -102,7 +103,7 @@ Copy `.env.example` and fill in:
 4. Copy `.env.example` to `.env` and fill in values
 5. `alembic upgrade head` to set up the database
 6. `python scripts/seed_projects.py` to seed projects
-7. `python -m uvicorn main:app --reload`
+7. `python -m uvicorn main:app --reload --reload-exclude "*.log"` (excluding the log file prevents `--reload` from restarting the server — and re-running project sync on startup — every time a request gets logged)
 8. Visit `http://localhost:8000`
 
 ## Running Tests

@@ -30,8 +30,8 @@ async def home(request: Request):
 
 
 @router.get("/about")
-async def about(request: Request):
-    return templates.TemplateResponse("about.html", {"request": request, "active_page": "about"})
+async def about():
+    return RedirectResponse(url="/", status_code=301)
 
 
 @router.get("/projects")

@@ -8,9 +8,10 @@ def test_home_page(client):
     response = client.get("/")
     assert response.status_code == 200
 
-def test_about_page(client):
-    response = client.get("/about")
-    assert response.status_code == 200
+def test_about_redirects_to_home(client):
+    response = client.get("/about", follow_redirects=False)
+    assert response.status_code == 301
+    assert response.headers["location"] == "/"
 
 def test_projects_page(client):
     response = client.get("/projects")

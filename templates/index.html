@@ -1,23 +1,82 @@
 {% extends "base.html" %}
 
-{% block title %}Home | Portfolio{% endblock %}
+{% block title %}Jacob Luttrull | Backend Software Engineer{% endblock %}
 
-{% block description %}Jacob Luttrull - Python developer and backend engineer. View my projects, skills, and get in touch.{% endblock %}
+{% block description %}Jacob Luttrull - backend software engineer building with Python, FastAPI, and Go. View my projects, skills, education, and get in touch.{% endblock %}
 
 {% block content %}
 <section class="hero">
     <div class="hero-content">
         <h1><span class="accent">Jacob Luttrull</span></h1>
-        <p class="subtitle">Python Developer / Backend Developer</p>
+        <p class="subtitle">Backend Software Engineer</p>
+        <p class="tagline">CS grad building backend services and AI tooling with Python, FastAPI, and Go — including this site, a FastAPI + PostgreSQL app deployed live.</p>
         <div class="hero-buttons">
-            <a href="/about" class="btn-outline-accent">Learn more about me</a>
             <a href="/projects" class="btn-outline-accent">View my projects</a>
+            <a href="/static/resume/Jacob_Luttrull_Resume.pdf" download class="btn-outline-accent">Download Resume</a>
         </div>
         <div class="social-links">
             <a href="https://github.com/jacobrluttrull" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"><i class="devicon-github-original" aria-hidden="true"></i></a>
             <a href="https://www.linkedin.com/in/jacob-luttrull-571403291/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"><i class="devicon-linkedin-plain" aria-hidden="true"></i></a>
             <a href="https://www.instagram.com/jakeluttrull" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
+            <a href="https://discord.com/users/841463065978339364" target="_blank" rel="noopener noreferrer" aria-label="Discord Profile"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.522 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a>
             <a href="mailto:jacobluttrull2@gmail.com" aria-label="Email Me"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></a>
+        </div>
+    </div>
+</section>
+
+<section class="page-section home-about">
+    <div class="container">
+        <h2 class="section-heading" style="margin-top: 0;">About <span class="accent">Me</span></h2>
+
+        <div class="home-card about-bio">
+            <p>Hi, my name is Jacob Luttrull! I'm a software engineer who specializes in Python, SQL, and frameworks like Django, FastAPI, and Go. I'm a persistent problem-solver who enjoys digging into tough bugs and finding clean solutions. I'm currently seeking junior backend or AI-focused software engineering roles where I can keep growing and contribute from day one.</p>
+            <p>I've been studying and building software for about five years, starting with C++ and eventually falling in love with Python. Along the way I've built a range of projects — including the site you're on right now — that have sharpened my skills and deepened my passion for backend development. When I'm not programming, I enjoy gaming, hiking in nice weather, and working out.</p>
+        </div>
+
+        <h2 class="section-heading">Skills</h2>
+        <div class="home-card skills-group">
+            <div class="skill-category">
+                <h3>Languages</h3>
+                <div class="skills-icons">
+                    <span class="skill-item"><i class="devicon-python-plain" aria-hidden="true"></i> Python</span>
+                    <span class="skill-item"><i class="devicon-java-plain" aria-hidden="true"></i> Java</span>
+                    <span class="skill-item"><i class="devicon-azuresqldatabase-plain" aria-hidden="true"></i> SQL</span>
+                    <span class="skill-item"><i class="devicon-c-plain" aria-hidden="true"></i> C</span>
+                    <span class="skill-item"><i class="devicon-go-plain" aria-hidden="true"></i> Go</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Frameworks / Libraries</h3>
+                <div class="skills-icons">
+                    <span class="skill-item"><i class="devicon-django-plain" aria-hidden="true"></i> Django</span>
+                    <span class="skill-item"><i class="devicon-fastapi-plain" aria-hidden="true"></i> FastAPI</span>
+                    <span class="skill-item"><i class="devicon-spring-plain" aria-hidden="true"></i> Spring Boot</span>
+                    <span class="skill-item"><i class="devicon-pandas-plain" aria-hidden="true"></i> Pandas</span>
+                    <span class="skill-item"><i class="devicon-streamlit-plain" aria-hidden="true"></i> Streamlit</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>Tools / Platforms</h3>
+                <div class="skills-icons">
+                    <span class="skill-item"><i class="devicon-git-plain" aria-hidden="true"></i> Git</span>
+                    <span class="skill-item"><i class="devicon-linux-plain" aria-hidden="true"></i> Linux</span>
+                    <span class="skill-item"><i class="devicon-docker-plain" aria-hidden="true"></i> Docker</span>
+                    <span class="skill-item"><i class="devicon-jetbrains-plain" aria-hidden="true"></i> Jetbrains IDEs</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-heading">Education</h2>
+        <div class="home-card education-entry">
+            <p>Bachelor's in Computer Science — Western Governors University (WGU), August 2025</p>
+            <img src="/static/images/wgu-logo.webp" alt="Western Governors University logo" class="education-logo" loading="lazy" decoding="async">
+        </div>
+
+        <div class="page-nav">
+            <a href="/projects" class="btn-outline-accent">View My Projects</a>
+            <a href="/contact" class="btn-outline-accent">Get in Touch</a>
         </div>
     </div>
 </section>
