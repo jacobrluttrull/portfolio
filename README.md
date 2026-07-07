@@ -14,6 +14,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 - JWT authentication (admin)
 - Cloudflare Turnstile (CAPTCHA)
 - Resend (email notifications)
+- Claude Code (AI-assisted development)
 
 ## Features
 - Home page: hero (name, tagline, resume download, social links — GitHub, LinkedIn, Instagram, Discord, Email) followed by About/Skills/Education on the same page (`/about` 301-redirects to `/`)

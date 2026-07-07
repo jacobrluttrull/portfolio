@@ -253,6 +253,13 @@ h1, h2, h3 {
     color: var(--text-primary);
 }
 
+.skill-item svg {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--text-primary);
+    flex-shrink: 0;
+}
+
 .education-entry {
     font-size: 1.15rem;
 }
