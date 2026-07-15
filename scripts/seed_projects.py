@@ -36,13 +36,22 @@ def seed_projects():
                 display_order = 2
             ),
             Project(
+                title = "Gator (RSS Feed Aggregator)",
+                description = "A CLI RSS feed aggregator written in Go, backed by PostgreSQL. Users register, follow and unfollow RSS feeds, and Gator continuously fetches new posts from the least-recently-updated feed on a timer, storing them in the database for browsing from the terminal.",
+                tech_stack = "Go, PostgreSQL, sqlc, goose",
+                github_link = "https://github.com/jacobrluttrull/gator",
+                image_url = "/static/images/rssagg.webp",
+                duration = "July 2026",
+                display_order = 3
+            ),
+            Project(
                 title= "Static Site Generator",
                 description= "This is a Python project from scratch that converts Markdown content into fully static HTML/CSS files.",
                 tech_stack= "Python, GitHub Pages, Markdown",
                 github_link= "https://github.com/jacobrluttrull/static_site_generator",
                 image_url = "/static/images/staticsite.webp",
                 duration = "February 2026",
-                display_order = 3
+                display_order = 4
             ),
             Project(
                 title = "AI Chatbot using OpenAI API",
@@ -51,7 +60,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/AI_Bot",
                 image_url = "/static/images/aibot.webp",
                 duration = "January 2026 - February 2026",
-                display_order = 4
+                display_order = 5
             ),
             Project(
                 title = "Pokedex CLI",
@@ -60,7 +69,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/pokedex",
                 image_url = "/static/images/pokedexcli.webp",
                 duration = "June 2026",
-                display_order = 5
+                display_order = 6
             ),
             Project(
                 title = "Git Clone in Python",
@@ -69,7 +78,7 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/python_git",
                 image_url = "/static/images/pythongit.webp",
                 duration = "November 2025 - January 2026",
-                display_order = 6
+                display_order = 7
             ),
             Project(
                 title = "Package Route Optimizer (WGU Project)",
@@ -78,15 +87,6 @@ def seed_projects():
                 github_link = "https://github.com/jacobrluttrull/package-routing-optimizer",
                 image_url = "/static/images/packageoptimizer.webp",
                 duration = "September 2025",
-                display_order = 7
-            ),
-            Project(
-                title = "Bookbot (Boot.dev Project)",
-                description = "A command-line tool that analyzes text files and reports word count and character frequency, sorted from most to least common. Built as part of the Boot.dev curriculum.",
-                tech_stack = "Python",
-                github_link = "https://github.com/jacobrluttrull/Bookbot",
-                image_url = "/static/images/bookbot.webp",
-                duration = "November 2025",
                 display_order = 8
             ),
             Project(
