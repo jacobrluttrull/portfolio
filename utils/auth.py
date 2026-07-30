@@ -1,5 +1,6 @@
 import datetime
 import os
+from typing import Any
 
 import bcrypt
 import dotenv
@@ -22,7 +23,9 @@ def create_jwt_token() -> str:
     token = jwt.encode(payload, jwt_secret, algorithm="HS256")
     return token
 
-def verify_jwt_token(token: str) -> dict | None:
+def verify_jwt_token(token: str) -> dict[str, Any] | None:
+    if not jwt_secret:
+        return None
     try:
         payload = jwt.decode(token, jwt_secret, algorithms=["HS256"])
         return payload
