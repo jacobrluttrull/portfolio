@@ -19,7 +19,7 @@ Jacob Luttrull's personal portfolio website showcasing projects, skills, and con
 ## Features
 - Home page: hero (name, tagline, resume download, social links — GitHub, LinkedIn, Instagram, Discord, Email) followed by About/Skills/Education on the same page (`/about` 301-redirects to `/`)
 - Light/dark theme toggle — auto-detects OS preference, manual override persisted in `localStorage`
-- Projects section (database-driven, admin-managed, git is the source of truth via an upsert-and-prune seed sync)
+- Projects section (database-driven, admin-managed, git is the source of truth via an upsert-and-prune seed sync) — split into a Featured tier (image, tech chips, optional highlight) and a compact list for the rest
 - Contact form with validation, XSS sanitization, CSRF protection, Turnstile CAPTCHA, and email notifications
 - Rate limiting on contact form and admin login
 - Admin panel (JWT-protected CRUD for projects)
