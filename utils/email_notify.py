@@ -1,5 +1,7 @@
-import resend
 import os
+
+import resend
+
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -25,5 +27,5 @@ def send_contact_notification(name: str, email: str, subject: str, message: str,
             "text": body
         })
         logger.info(f"Contact notification sent for {name} ({email})")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 — email delivery must never crash the contact-form request
         logger.error(f"Failed to send contact notification: {e}")

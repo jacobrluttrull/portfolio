@@ -1,0 +1,4 @@
+[tool.ruff.lint]
+ignore = [
+    "B008", # FastAPI's Depends()/Form() pattern relies on function calls in argument defaults
+]

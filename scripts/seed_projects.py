@@ -4,10 +4,12 @@
 # project in the database that's no longer listed here gets removed.
 
 import sys
+
 sys.path.append(".")
 
-from database import SessionLocal, engine, Base
+from database import Base, SessionLocal, engine
 from models.project import Project
+
 
 def seed_projects():
     Base.metadata.create_all(bind=engine)

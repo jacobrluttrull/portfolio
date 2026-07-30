@@ -1,14 +1,12 @@
-import pytest
 from utils.validators import (
     sanitize,
-    validate_name,
     validate_email,
-    validate_subject,
-    validate_phone,
     validate_message,
+    validate_name,
+    validate_phone,
+    validate_subject,
     validate_url,
 )
-
 
 # --- sanitize ---
 

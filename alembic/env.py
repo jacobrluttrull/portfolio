@@ -1,7 +1,6 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
+from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
@@ -18,8 +17,12 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from database import Base, DATABASE_URL
-from models import contact, project
+from database import DATABASE_URL, Base
+from models import (  # noqa: F401 — registers tables on Base.metadata for autogenerate
+    contact,
+    project,
+)
+
 target_metadata = Base.metadata
 
 # Use the same database as the app (database.py loads .env and requires DATABASE_URL),

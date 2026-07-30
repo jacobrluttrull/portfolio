@@ -1,5 +1,6 @@
-from database import Base
 from sqlalchemy import Boolean, Column, Integer, String, Text
+
+from database import Base
 
 # Defining the Project Model which will include the Title, Description, Tech Stack, link to project (GitHub), image of project (optional),  and duration of project
 

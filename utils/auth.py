@@ -1,9 +1,9 @@
+import datetime
+import os
+
 import bcrypt
 import dotenv
-from jose import jwt, JWTError
-import os
-import datetime
-
+from jose import JWTError, jwt
 
 dotenv.load_dotenv()
 admin_hash = os.getenv("ADMIN_PASSWORD_HASH")

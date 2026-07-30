@@ -1,10 +1,11 @@
 import os
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
-from unittest.mock import AsyncMock, MagicMock, patch
 
 # Set required env vars before importing the app
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"

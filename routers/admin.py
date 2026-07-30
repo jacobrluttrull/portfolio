@@ -1,17 +1,16 @@
-import utils.auth as auth
-
-from fastapi import APIRouter, Depends, Request, Form, HTTPException
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
 from slowapi import Limiter
 from slowapi.util import get_remote_address
-from fastapi.templating import Jinja2Templates
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
+
 from database import get_db
 from models.project import Project
-from fastapi.responses import RedirectResponse
-from utils.validators import sanitize, validate_url
+from utils import auth
 from utils.logger import get_logger
-
+from utils.validators import sanitize, validate_url
 
 router = APIRouter()
 limiter = Limiter(key_func=get_remote_address)

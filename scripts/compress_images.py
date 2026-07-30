@@ -1,5 +1,6 @@
-from PIL import Image
 from pathlib import Path
+
+from PIL import Image
 
 images_dir = Path(__file__).parent.parent / "static" / "images"
 

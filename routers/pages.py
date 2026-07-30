@@ -1,22 +1,29 @@
 import os
+from typing import Annotated
 
-from fastapi import APIRouter, Request, Depends
-from fastapi.templating import Jinja2Templates
-from sqlalchemy.orm import Session
-from fastapi import Form
-from starlette.responses import RedirectResponse
 import httpx
+from fastapi import APIRouter, BackgroundTasks, Depends, Form, Request
+from fastapi.templating import Jinja2Templates
 from slowapi import Limiter
 from slowapi.util import get_remote_address
-from utils.logger import get_logger
-from models.contact import Contact
-from typing import Annotated
-from database import get_db
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
+from starlette.responses import RedirectResponse
+
+from database import get_db
+from models.contact import Contact
 from models.project import Project
-from utils.validators import validate_message, validate_email, validate_phone, validate_name, sanitize, validate_subject
 from utils.email_notify import send_contact_notification
-from fastapi import BackgroundTasks
+from utils.logger import get_logger
+from utils.validators import (
+    sanitize,
+    validate_email,
+    validate_message,
+    validate_name,
+    validate_phone,
+    validate_subject,
+)
+
 router = APIRouter()
 limiter = Limiter(key_func=get_remote_address)
 logger = get_logger(__name__)
@@ -81,7 +88,7 @@ async def contact_submit(
     #print(r.json()) #testing to see the response from cloudflare turnstile, I want to make sure I'm sending the request correctly and handling the response correctly. The expected response should have a "success" field that is true if the verification passed, and false if it failed. It may also have an "error-codes" field with more information about why it failed if it did.
     if not r.json().get("success"):
         errors.append("Verification failed. Please try again.")
-        logger.warning(f"Turnstile Verification failed.")
+        logger.warning("Turnstile Verification failed.")
         return templates.TemplateResponse("contact.html", {"request": request, "errors": errors, "name": name, "email": email, "subject": subject, "message": message, "phone_number": phone_number, "active_page": "contact"})
 
 

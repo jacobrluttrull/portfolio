@@ -1,6 +1,4 @@
-import pytest
 from tests.conftest import get_csrf_token
-
 
 # --- Public GET routes ---
 

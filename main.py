@@ -1,23 +1,26 @@
+import os
+
+import dotenv
 from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
-from starlette.exceptions import HTTPException as StarletteHTTPException
 from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-import os
-import dotenv
+from slowapi.util import get_remote_address
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette_csrf import CSRFMiddleware
-from utils.logger import get_logger
+
 from scripts.seed_projects import seed_projects
+from utils.logger import get_logger
+
 dotenv.load_dotenv()
 CSRF_SECRET = os.getenv("CSRF_SECRET")
 if not CSRF_SECRET:
     raise ValueError("CSRF_SECRET environment variable is not set.")
 
 
-from routers import pages, admin
+from routers import admin, pages
 
 seed_projects()
 limiter = Limiter(key_func=get_remote_address)
