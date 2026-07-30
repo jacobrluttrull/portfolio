@@ -41,7 +41,7 @@ def seed_projects():
                 description = "A CLI RSS feed aggregator written in Go, backed by PostgreSQL. Users register, follow and unfollow RSS feeds, and Gator continuously fetches new posts from the least-recently-updated feed on a timer, storing them in the database for browsing from the terminal.",
                 tech_stack = "Go, PostgreSQL, sqlc, goose",
                 github_link = "https://github.com/jacobrluttrull/gator",
-                image_url = "/static/images/rssagg.webp",
+                image_url = "/static/images/rssagg-v2.webp",
                 duration = "July 2026",
                 display_order = 1,
                 is_featured = True
