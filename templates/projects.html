@@ -4,27 +4,61 @@
 
 {% block description %}Browse Jacob Luttrull's portfolio projects including Python, Django, FastAPI, and data science work.{% endblock %}
 
+{% macro tech_chips(tech_stack) %}
+<div class="tech-chips">
+    {% for tech in tech_stack.split(',') %}
+    <span class="tech-chip">{{ tech.strip() }}</span>
+    {% endfor %}
+</div>
+{% endmacro %}
+
 {% block content %}
 <section class="page-section">
     <div class="container">
         <h1 class="page-title">My <span class="accent">Projects</span></h1>
 
-        <div class="projects-grid">
-            {% for project in projects %}
-            <div class="project-card">
-                {% if project.image_url %}
-                <a href="{{ project.image_url }}" target="_blank" rel="noopener noreferrer">
-                    <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" loading="lazy" decoding="async" width="800" height="450">
-                </a>
-                {% endif %}
-                <h3>{{ project.title }}</h3>
-                <p>{{ project.description }}</p>
-                <p class="tech-stack">{{ project.tech_stack }}</p>
-                <p class="project-duration">{{ project.duration }}</p>
-                <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent">GitHub</a>
+        {% set featured_projects = projects | selectattr('is_featured') | list %}
+        {% set other_projects = projects | rejectattr('is_featured') | list %}
+
+        {% if featured_projects %}
+        <section class="featured-projects">
+            <h2 class="section-heading">Featured Projects</h2>
+            <div class="featured-grid">
+                {% for project in featured_projects %}
+                <article class="project-card project-card--featured">
+                    {% if project.image_url %}
+                    <a href="{{ project.image_url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" loading="lazy" decoding="async" width="800" height="450">
+                    </a>
+                    {% endif %}
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    {{ tech_chips(project.tech_stack) }}
+                    {% if project.highlight %}
+                    <p class="project-highlight">{{ project.highlight }}</p>
+                    {% endif %}
+                    <p class="project-duration">{{ project.duration }}</p>
+                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent">GitHub</a>
+                </article>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+        </section>
+        {% endif %}
+
+        {% if other_projects %}
+        <section class="more-projects">
+            <h2 class="section-heading">More Projects</h2>
+            <ul class="more-projects-list">
+                {% for project in other_projects %}
+                <li class="more-project-row">
+                    <span class="more-project-title">{{ project.title }}</span>
+                    {{ tech_chips(project.tech_stack) }}
+                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent more-project-link">GitHub</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
 
         <div class="page-nav">
             <a href="/" class="btn-outline-accent">Back to Home</a>

@@ -1,4 +1,5 @@
-from tests.conftest import get_csrf_token
+from models.project import Project
+from tests.conftest import TestingSessionLocal, get_csrf_token
 
 # --- Public GET routes ---
 
@@ -14,6 +15,71 @@ def test_about_redirects_to_home(client):
 def test_projects_page(client):
     response = client.get("/projects")
     assert response.status_code == 200
+
+def test_projects_page_featured_and_more_sections(client):
+    db = TestingSessionLocal()
+    try:
+        db.add_all([
+            Project(
+                title="Featured With Highlight",
+                description="A description of the featured project with a highlight.",
+                tech_stack="Python, FastAPI",
+                github_link="https://github.com/example/featured-highlight",
+                duration="January 2026",
+                display_order=1,
+                is_featured=True,
+                highlight="Found a spec violation before it shipped.",
+            ),
+            Project(
+                title="Featured No Highlight",
+                description="A description of the featured project without a highlight.",
+                tech_stack="Go, PostgreSQL",
+                github_link="https://github.com/example/featured-no-highlight",
+                duration="February 2026",
+                display_order=2,
+                is_featured=True,
+            ),
+            Project(
+                title="Compact Project",
+                description="A description that must not leak into the compact list.",
+                tech_stack="Rust, WASM",
+                github_link="https://github.com/example/compact-project",
+                duration="March 2026",
+                display_order=3,
+                is_featured=False,
+            ),
+        ])
+        db.commit()
+    finally:
+        db.close()
+
+    try:
+        response = client.get("/projects")
+        assert response.status_code == 200
+        text = response.text
+
+        featured_section, more_section = text.split("More Projects", 1)
+
+        assert "Featured With Highlight" in featured_section
+        assert "A description of the featured project with a highlight." in featured_section
+        assert "Found a spec violation before it shipped." in featured_section
+        assert '<span class="tech-chip">Python</span>' in featured_section
+        assert '<span class="tech-chip">FastAPI</span>' in featured_section
+
+        assert "Featured No Highlight" in featured_section
+        assert "coming soon" not in text.lower()
+
+        assert "Compact Project" in more_section
+        assert "A description that must not leak into the compact list." not in more_section
+        assert "<img" not in more_section
+        assert '<span class="tech-chip">Rust</span>' in more_section
+    finally:
+        db = TestingSessionLocal()
+        try:
+            db.query(Project).delete()
+            db.commit()
+        finally:
+            db.close()
 
 def test_contact_page(client):
     response = client.get("/contact")
