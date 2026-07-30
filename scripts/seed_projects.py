@@ -17,17 +17,14 @@ def seed_projects():
     try:
         projects = [
             Project(
-                title= "Oklahoma Sooners Dashboard",
-                description= "A Django-powered college football dashboard that pulls live data from the CFBD API."
-                             " Displays season records, AP rankings, player stat leaders, an annotated schedule, and game box scores. Features idempotent data syncing, caching for performance, "
-                             "and a custom management command for refreshing stats. ",
-                tech_stack= "Python, Django, SQLite, CFBD API, Bootstrap",
-                github_link= "https://github.com/jacobrluttrull/oklahoma_sooners_dashboard",
-                image_url = "/static/images/ousoonerproject.webp",
-                duration = "October 2025 - November 2025",
+                title = "Gator (RSS Feed Aggregator)",
+                description = "A CLI RSS feed aggregator written in Go, backed by PostgreSQL. Users register, follow and unfollow RSS feeds, and Gator continuously fetches new posts from the least-recently-updated feed on a timer, storing them in the database for browsing from the terminal.",
+                tech_stack = "Go, PostgreSQL, sqlc, goose",
+                github_link = "https://github.com/jacobrluttrull/gator",
+                image_url = "/static/images/rssagg.webp",
+                duration = "July 2026",
                 display_order = 1,
                 is_featured = True
-
             ),
             Project(
                 title= "Type 2 Diabetes Prediction Website (Capstone Project)",
@@ -40,15 +37,16 @@ def seed_projects():
                 is_featured = True
             ),
             Project(
-                title = "Gator (RSS Feed Aggregator)",
-                description = "A CLI RSS feed aggregator written in Go, backed by PostgreSQL. Users register, follow and unfollow RSS feeds, and Gator continuously fetches new posts from the least-recently-updated feed on a timer, storing them in the database for browsing from the terminal.",
-                tech_stack = "Go, PostgreSQL, sqlc, goose",
-                github_link = "https://github.com/jacobrluttrull/gator",
-                image_url = "/static/images/rssagg.webp",
-                duration = "July 2026",
+                title= "Oklahoma Sooners Dashboard",
+                description= "A Django-powered college football dashboard that pulls live data from the CFBD API."
+                             " Displays season records, AP rankings, player stat leaders, an annotated schedule, and game box scores. Features idempotent data syncing, caching for performance, "
+                             "and a custom management command for refreshing stats. ",
+                tech_stack= "Python, Django, SQLite, CFBD API, Bootstrap",
+                github_link= "https://github.com/jacobrluttrull/oklahoma_sooners_dashboard",
+                image_url = "/static/images/ousoonerproject.webp",
+                duration = "October 2025 - November 2025",
                 display_order = 3,
-                is_featured = True,
-                highlight = "Found the key-auth system violated its own spec — leaked API keys never expired. Added revocation, closing the gap before merge."
+                is_featured = True
             ),
             Project(
                 title= "Static Site Generator",

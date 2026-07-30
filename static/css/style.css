@@ -309,6 +309,12 @@ h1, h2, h3 {
     margin-right: auto;
 }
 
+.featured-grid > .project-card:first-child {
+    grid-column: 1 / -1;
+    max-width: 70%;
+    margin: 0 auto;
+}
+
 .project-card {
     background-color: var(--card-bg);
     padding: var(--space-5) var(--space-6);
@@ -685,6 +691,11 @@ h1, h2, h3 {
     .featured-grid {
         grid-template-columns: 1fr;
         gap: var(--space-5);
+    }
+
+    .featured-grid > .project-card:first-child {
+        max-width: none;
+        margin: 0;
     }
 
     .more-project-row {
