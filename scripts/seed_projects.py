@@ -4,6 +4,7 @@
 # project in the database that's no longer listed here gets removed.
 
 import sys
+import subprocess
 
 sys.path.append(".")
 
@@ -11,8 +12,27 @@ from database import Base, SessionLocal, engine
 from models.project import Project
 
 
+def run_migrations():
+    """Run Alembic migrations before seeding."""
+    try:
+        result = subprocess.run(
+            ["alembic", "upgrade", "head"],
+            cwd="/app",
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            print(f"Migration warning: {result.stderr}")
+    except Exception as e:
+        print(f"Could not run migrations: {e}. Continuing with schema creation...")
+        Base.metadata.create_all(bind=engine)
+
+
 def seed_projects():
-    Base.metadata.create_all(bind=engine)
+    # Run migrations to ensure all columns exist
+    run_migrations()
+    
     db = SessionLocal()
     try:
         projects = [
@@ -156,3 +176,4 @@ def seed_projects():
 
 if __name__ == "__main__":
     seed_projects()
+
