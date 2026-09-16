@@ -2,17 +2,17 @@
 
 {% block title %}Jacob Luttrull | Backend Software Engineer{% endblock %}
 
-{% block description %}Jacob Luttrull - backend software engineer building with Python, FastAPI, and Go. View my projects, skills, education, and get in touch.{% endblock %}
+{% block description %}Backend software engineer portfolio for Jacob Luttrull, featuring projects built with Python, Go, FastAPI, Django, and PostgreSQL.{% endblock %}
 
 {% block content %}
 <section class="hero">
     <div class="hero-content">
         <h1><span class="accent">Jacob Luttrull</span></h1>
         <p class="subtitle">Backend Software Engineer</p>
-        <p class="tagline">CS grad building backend services and AI tooling with Python, FastAPI, and Go — including this site, a FastAPI + PostgreSQL app deployed live.</p>
+        <p class="tagline">I build backend services and AI tools with Python and Go. This site is one of them: a FastAPI app backed by PostgreSQL and deployed on Railway.</p>
         <div class="hero-buttons">
-            <a href="/projects" class="btn-outline-accent">View my projects</a>
-            <a href="/static/resume/Jacob_Luttrull_Resume.pdf" download class="btn-outline-accent">Download Resume</a>
+            <a href="/projects" class="btn-outline-accent">See my projects</a>
+            <a href="/static/resume/Jacob_Luttrull_Resume.pdf" download class="btn-outline-accent">Download my resume</a>
         </div>
         <div class="social-links">
             <a href="https://github.com/jacobrluttrull" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"><i class="devicon-github-original" aria-hidden="true"></i></a>
@@ -26,11 +26,17 @@
 
 <section class="page-section home-about">
     <div class="container">
-        <h2 class="section-heading" style="margin-top: 0;">About <span class="accent">Me</span></h2>
+        <h2 class="section-heading" style="margin-top: 0;">Education</h2>
+        <div class="home-card education-entry">
+            <p>Bachelor's in Computer Science — Western Governors University (WGU), August 2025</p>
+            <img src="/static/images/wgu-logo.webp" alt="Western Governors University logo" class="education-logo" loading="lazy" decoding="async">
+        </div>
+
+        <h2 class="section-heading" style="margin-top: 0;">A little <span class="accent">about me</span></h2>
 
         <div class="home-card about-bio">
-            <p>Hi, my name is Jacob Luttrull! I'm a software engineer who specializes in Python, SQL, and frameworks like Django, FastAPI, and Go. I'm a persistent problem-solver who enjoys digging into tough bugs and finding clean solutions. I'm currently seeking junior backend or AI-focused software engineering roles where I can keep growing and contribute from day one.</p>
-            <p>I've been studying and building software for about five years, starting with C++ and eventually falling in love with Python. Along the way I've built a range of projects — including the site you're on right now — that have sharpened my skills and deepened my passion for backend development. When I'm not programming, I enjoy gaming, hiking in nice weather, and working out.</p>
+            <p>Hi, I'm Jacob. I'm a backend-focused software engineer who works mostly in Python, SQL, FastAPI, and Django, with Go becoming a bigger part of what I build. I like the parts of software that are easy to overlook: data models, error handling, background jobs, and the edge cases that only show up after everything seems to work. I'm looking for a junior backend or AI-focused role where I can keep building, ask good questions, and take ownership of useful work.</p>
+            <p>I started programming with C++ about five years ago, then moved toward Python and backend development. Since then, I've built projects ranging from a Git implementation and a delivery-route optimizer to an AI coding agent and this portfolio site. Each one has given me a different problem to wrestle with: parsing, algorithms, APIs, databases, or deployment. Outside of code, I'm usually gaming, hiking when the weather cooperates, or at the gym.</p>
         </div>
 
         <h2 class="section-heading">Skills</h2>
@@ -69,14 +75,8 @@
             </div>
         </div>
 
-        <h2 class="section-heading">Education</h2>
-        <div class="home-card education-entry">
-            <p>Bachelor's in Computer Science — Western Governors University (WGU), August 2025</p>
-            <img src="/static/images/wgu-logo.webp" alt="Western Governors University logo" class="education-logo" loading="lazy" decoding="async">
-        </div>
-
         <div class="page-nav">
-            <a href="/projects" class="btn-outline-accent">View My Projects</a>
+            <a href="/projects" class="btn-outline-accent">See all projects</a>
             <a href="/contact" class="btn-outline-accent">Get in Touch</a>
         </div>
     </div>
