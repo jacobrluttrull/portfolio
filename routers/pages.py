@@ -32,8 +32,17 @@ RECAPTCHA_SECRET_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
 
 
 @router.get("/")
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "active_page": "home"})
+async def home(request: Request, db: Session = Depends(get_db)):
+    featured_projects = (
+        db.query(Project)
+        .filter(Project.is_featured.is_(True))
+        .order_by(Project.display_order)
+        .all()
+    )
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "active_page": "home", "featured_projects": featured_projects},
+    )
 
 
 @router.get("/about")

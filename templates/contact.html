@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Contact | Portfolio{% endblock %}
+{% block title %}Contact | Jacob Luttrull{% endblock %}
 
 {% block description %}Get in touch with Jacob Luttrull for backend development opportunities and collaborations.{% endblock %}
 
 {% block content %}
-<section class="page-section">
-    <div class="container">
-        <h1 class="page-title">Contact <span class="accent">Me</span></h1>
+<main id="main-content" class="page-section contact-page">
+    <div class="site-container">
+        <p class="eyebrow">Have a question or an opportunity?</p>
+        <h1 class="page-title">LET'S TALK.</h1>
+        <p class="page-intro">Send me a note about what you're working on. I'll get back to you as soon as I can.</p>
 
         {% if success == 'true' %}
         <div class="success-message">
@@ -50,14 +52,14 @@
             </div>
 
             <div class="cf-turnstile" data-sitekey="0x4AAAAAAC14LP_LsbFzcT4g" data-theme="dark" data-callback="onTurnstileSuccess"></div>
-            <button type="submit" id="submit-btn" class="btn-outline-accent" disabled>Send Message</button>
+            <button type="submit" id="submit-btn" class="btn-outline-accent" disabled>Send message &gt;</button>
             <p class="contact-direct">Or contact me directly at <a href="mailto:jacobluttrull2@gmail.com">jacobluttrull2@gmail.com</a></p>
         </form>
         <script src="/static/js/contact.js"></script>
 
         <div class="page-nav">
-            <a href="/" class="btn-outline-accent">Back to Home</a>
+            <a href="/" class="btn-outline-accent">Back to home &gt;</a>
         </div>
     </div>
-</section>
+</main>
 {% endblock %}

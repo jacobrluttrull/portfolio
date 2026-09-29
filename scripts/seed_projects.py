@@ -53,7 +53,7 @@ def seed_projects():
                 github_link= "https://github.com/jacobrluttrull/prod-diabetic-capstone",
                 image_url = "/static/images/diabetic.webp",
                 duration = "August 2025, September 2025",
-                display_order = 2,
+                display_order = 3,
                 is_featured = True
             ),
             Project(
@@ -65,7 +65,7 @@ def seed_projects():
                 github_link= "https://github.com/jacobrluttrull/oklahoma_sooners_dashboard",
                 image_url = "/static/images/ousoonerproject.webp",
                 duration = "October 2025 - November 2025",
-                display_order = 3,
+                display_order = 2,
                 is_featured = True
             ),
             Project(

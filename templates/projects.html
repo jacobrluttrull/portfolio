@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Projects | Portfolio{% endblock %}
+{% block title %}Projects | Jacob Luttrull{% endblock %}
 
 {% block description %}Browse Jacob Luttrull's portfolio projects including Python, Django, FastAPI, and data science work.{% endblock %}
 
@@ -13,9 +13,12 @@
 {% endmacro %}
 
 {% block content %}
-<section class="page-section">
-    <div class="container">
-        <h1 class="page-title">My <span class="accent">Projects</span></h1>
+<main id="main-content" class="page-section projects-page">
+    <div class="site-container">
+        <div class="page-header">
+            <h1 class="page-title">PROJECTS.</h1>
+            <p class="page-intro">Featured projects are my bigger projects and below are my smaller projects that are completed.</p>
+        </div>
 
         {% set featured_projects = projects | selectattr('is_featured') | list %}
         {% set other_projects = projects | rejectattr('is_featured') | list %}
@@ -27,8 +30,8 @@
                 {% for project in featured_projects %}
                 <article class="project-card project-card--featured">
                     {% if project.image_url %}
-                    <a href="{{ project.image_url }}" target="_blank" rel="noopener noreferrer">
-                        <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image" loading="lazy" decoding="async" width="800" height="450">
+                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ project.title }} on GitHub, opens in a new tab">
+                        <img src="{{ project.image_url }}" alt="{{ project.title }}" class="project-image{% if project.image_url == '/static/images/diabetic.webp' %} project-image--contain{% endif %}" loading="lazy" decoding="async" width="800" height="450">
                     </a>
                     {% endif %}
                     <h3>{{ project.title }}</h3>
@@ -38,7 +41,7 @@
                     <p class="project-highlight">{{ project.highlight }}</p>
                     {% endif %}
                     <p class="project-duration">{{ project.duration }}</p>
-                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent">GitHub</a>
+                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent">View on GitHub &gt;</a>
                 </article>
                 {% endfor %}
             </div>
@@ -53,7 +56,7 @@
                 <li class="more-project-row">
                     <span class="more-project-title">{{ project.title }}</span>
                     {{ tech_chips(project.tech_stack) }}
-                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent more-project-link">GitHub</a>
+                    <a href="{{ project.github_link }}" target="_blank" rel="noopener noreferrer" class="btn-outline-accent more-project-link">GitHub &gt;</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -61,9 +64,9 @@
         {% endif %}
 
         <div class="page-nav">
-            <a href="/" class="btn-outline-accent">Back to Home</a>
-            <a href="/contact" class="btn-outline-accent">Get in Touch</a>
+            <a href="/" class="btn-outline-accent">Back to home &gt;</a>
+            <a href="/contact" class="btn-outline-accent">Get in touch &gt;</a>
         </div>
     </div>
-</section>
+</main>
 {% endblock %}
