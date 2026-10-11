@@ -2,7 +2,7 @@
 
 {% block title %}Contact | Jacob Luttrull{% endblock %}
 
-{% block description %}Get in touch with Jacob Luttrull for backend development opportunities and collaborations.{% endblock %}
+{% block description %}Get in touch with Jacob Luttrull about software engineering opportunities.{% endblock %}
 
 {% block content %}
 <main id="main-content" class="page-section contact-page">
@@ -51,7 +51,7 @@
                 <textarea id="message" name="message" rows="6" required autocomplete="off">{{ message or '' }}</textarea>
             </div>
 
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAC14LP_LsbFzcT4g" data-theme="dark" data-callback="onTurnstileSuccess"></div>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAC14LP_LsbFzcT4g" data-theme="auto" data-callback="onTurnstileSuccess"></div>
             <button type="submit" id="submit-btn" class="btn-outline-accent" disabled>Send message &gt;</button>
             <p class="contact-direct">Or contact me directly at <a href="mailto:jacobluttrull2@gmail.com">jacobluttrull2@gmail.com</a></p>
         </form>

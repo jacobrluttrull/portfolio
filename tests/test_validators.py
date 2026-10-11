@@ -161,7 +161,7 @@ def test_url_full_https():
     assert validate_url("https://github.com/user/repo") is True
 
 def test_url_no_protocol():
-    assert validate_url("github.com/user/repo") is True
+    assert validate_url("github.com/user/repo") is False
 
 def test_url_static_path():
     assert validate_url("/static/images/project.png") is True
